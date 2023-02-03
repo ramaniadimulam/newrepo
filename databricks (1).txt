@@ -1,0 +1,128 @@
+
+Databricks:- 
+* Databricks Lakehouse Platfrom 
+* ELT with spark SQL and Python 
+* Incremental Data Processing 
+* Production Pipelines   
+* Data Governance
+
+Data Bricks:- Databricks is a multi-cloud lakehouse platform
+ based on Apache Spark.
+* Databricks is an organisation and big data processing platform founded by the creators of apache.
+* Databricks is an industry-leading, cloud-based data engineering tool used for processing and
+  transforming massive quantities of data and exploring the data through machine learning models.
+
+* Datalake + Data warehouse = Lakehouse
+* ELT(Etract, load, transform)
+	 
+Lakehouse:- One platform that unify all of your data engineering,
+ analytics and AI workloads. 
+* The Databricks Lakehouse combines the ACID(atomicity, consistency, isolation, and durability) transactions and data governance of data warehouses
+ with the flexibility and cost-efficiency of data lakes to enable business intelligence (BI) and machine learning (ML) on all data.
+	Architecture of Lakehouse:
+		It is divided into 3 parts:
+			Cloud service
+			Runtime
+			Workspace
+* There are two high level components the control plane and the data plane.
+* The control plane resides in Databricks account while the data plane is 
+    in your own cloud subscription.
+* The compute and the storage will be always in your own cloud account. 
+* The databricks will provide you with the tools you need to use and control 
+  your infrastucture.
+
+* Spark on Databricks:- Apache Spark is a lightning-fast unified analytics 
+  engine for big data and machine learning.
+* DBFS(Data bricks file system):- DBFS is Preinstalled in Databricks Cluters.
+  DBFS is just an abstraction layer, while it uses the underlying cloud storage 
+  to persist.
+
+* Magic commands:- Magic commands are the built in commands that provide the
+  same output regardless of the notebook language.
+* %sql - command to change the run language in notebook.
+* %md - markdown magic command that allows us to have a cell with formatted text.
+  It helps you to add comments to our notebook.
+* %run - run magic command that allows us to run another notebook from the current 
+  notebook.
+  syntax:- ./includes(folder name)/setup(notebook name)
+* %fs - FS magic command to deal with file system operations like ls for listing 
+  files in a given directory.
+* Another way to deal with filesystem operations in to use databricks utilities, also known as dbutils.
+  syntax:- dbutils.help(), dbutils.fs.help()
+* To create a database:
+  SYNTAX:- CREATE DATASASE db_name
+  	   CREATE SCHEMA db_name
+* Hive metastore:-It is a repository of metadata such as Databases, Tables, data. 
+* display(files) - We can see the details of the output in a clear way in a tabular format.
+* DESCRIBE HISTORY - History of table in SQL using DESCRIBE HISTORY command.
+* TIME TRAVEL:-
+  Query older versions of data using a timestamp:-
+  syntax:- SELECT * FROM employees TIMESTAMP AS OF"2023-02-01" 
+  (or)
+  syntax:- SELECT * FROM employees VERSION AS OF 3 
+           SELECT * FROM employees@v36
+* Rollback Versions:-
+  using RESTORE TABLE command
+  syntax:- RESTORE TABLE employees TO TIMESTAMP AS OF "2022-12-12"
+  (OR)
+  syntax:- RESTORE TABLE employees TO VERSION AS OF 3
+* Compaction:- 
+  The compaction operation is a way to reduce disk space usage by removing unwanted and old 
+  data from database or view index files.
+  * You can trigger compaction simply by running the OPTIMIZE command.  For example we have many small files
+    when we compact it will change into one or more larger files.
+  syntax:- OPTIMIZE employees
+	   ZORDER BY column_name
+* Vaccum a DELTA TABLE:-
+  * Cleaning up unused data files
+    * uncommitted files
+    * files that are no longer in latest table state
+  syntax:- VACCUM table_name [retension period]
+    * Default retension period is 7 days
+  * NOTE:- Vaccum = no time travel
+* DROP TABLE employees- is used to completely delete the table from the database.
+
+
+
+* DELTA LAKE:-  Delta lake is an open-source storage framework that brings reliability to data lakes
+* Delta lake is a component which is deployed on the cluster as part of the Datacricks runtime.
+* Transaction log:- Ordered records of every transaction performed on the table.
+* In databricks there are two types of tables:
+	* Managed tables:- Created under the database directory.
+			  * Dropping the table, delete the underlying data files.
+	* External tables:-Created outside the database directory.
+			  * Dropping the table, will NOT delete the underlying data files.
+    			  * To create a External table:- USE db_x;
+			                                 CREATE TABLE table_name
+                                                         LOCATION 'dbfs/some/path_2/x_table3';
+
+* We can also create a table using CTAS (Create table as select statement). It will create and populate data tables using the output of a sselect
+  statement.
+
+
+* Hive metastore:-
+  A Hive metastore is a database that holds metadata about our data.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
