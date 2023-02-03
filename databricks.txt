@@ -1,0 +1,68 @@
+
+Databricks:- 
+* Databricks Lakehouse Platfrom 
+* ELT with spark SQL and Python 
+* Incremental Data Processing 
+* Production Pipelines   
+* Data Governance
+
+Data Bricks:- Databricks is a multi-cloud lakehouse platform
+ based on Apache Spark.
+* Databricks is an organisation and big data processing platform founded by the creators of apache.
+* Databricks is an industry-leading, cloud-based data engineering tool used for processing and
+  transforming massive quantities of data and exploring the data through machine learning models.
+
+* Datalake + Data warehouse = Lakehouse
+* ELT(Etract, load, transform)
+	 
+Lakehouse:- One platform that unify all of your data engineering,
+ analytics and AI workloads. 
+* The Databricks Lakehouse combines the ACID(atomicity, consistency, isolation, and durability) transactions and data governance of data warehouses
+ with the flexibility and cost-efficiency of data lakes to enable business intelligence (BI) and machine learning (ML) on all data.
+	Architecture of Lakehouse:
+		It is divided into 3 parts:
+			Cloud service
+			Runtime
+			Workspace
+* There are two high level components the control plane and the data plane.
+* The control plane resides in Databricks account while the data plane is 
+    in your own cloud subscription.
+* The compute and the storage will be always in your own cloud account. 
+* The databricks will provide you with the tools you need to use and control 
+  your infrastucture.
+
+* Spark on Databricks:- Apache Spark is a lightning-fast unified analytics 
+  engine for big data and machine learning.
+* DBFS(Data bricks file system):- DBFS is Preinstalled in Databricks Cluters.
+  DBFS is just an abstraction layer, while it uses the underlying cloud storage 
+  to persist.
+
+* Magic commands:- Magic commands are the built in commands that provide the
+* %sql - command to change the run language in notebook.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
