@@ -21,7 +21,7 @@ Databricks:- Uses
   engine for big data and machine learning.
 
 * DELTA LAKE:-  Delta lake is an open-source storage framework that brings reliability to data lakes
-* Delta lake is a component which is deployed on the cluster as part of the Databricks runtime.
+* Delta lake is a component which is deployed on the cluster as part of the Datacricks runtime.
 
 * Hive metastore:-
   A Hive metastore is a database that holds metadata about our data.
