@@ -1,29 +1,40 @@
 
-Databricks:- 
-* Databricks Lakehouse Platfrom 
-* ELT with spark SQL and Python 
-* Incremental Data Processing 
-* Production Pipelines   
-* Data Governance
-
-Data Bricks:- Databricks is a multi-cloud lakehouse platform
- based on Apache Spark.
+Data Bricks:- Databricks is a multi-cloud lakehouse platform based on Apache Spark.
 * Databricks is an organisation and big data processing platform founded by the creators of apache.
 * Databricks is an industry-leading, cloud-based data engineering tool used for processing and
   transforming massive quantities of data and exploring the data through machine learning models.
 
-* Datalake + Data warehouse = Lakehouse
-* ELT(Etract, load, transform)
+Databricks:- Uses
+* Databricks Lakehouse Platfrom 
+* ELT(Etract, load, transform) with spark SQL and Python 
+* Incremental Data Processing 
+* Production Pipelines   
+* Data Governance
+
+* Data lake + Data warehouse = Lakehouse
+
+* Spark:- Spark is a general-purpose distributed processing system used for big data workloads. It has
+  been deployed in every type of big data use case to detect patterns, and provide real-time insight.
+* Spark  SQL:- Spark SQL is a Spark module for structured data processing. It provides a programming
+  abstraction called DataFrames and can also act as a distributed SQL query engine.
+* Spark on Databricks:- Apache Spark is a lightning-fast unified analytics 
+  engine for big data and machine learning.
+
+* DELTA LAKE:-  Delta lake is an open-source storage framework that brings reliability to data lakes
+* Delta lake is a component which is deployed on the cluster as part of the Datacricks runtime.
+
+* Hive metastore:-
+  A Hive metastore is a database that holds metadata about our data.
 	 
-Lakehouse:- One platform that unify all of your data engineering,
- analytics and AI workloads. 
-* The Databricks Lakehouse combines the ACID(atomicity, consistency, isolation, and durability) transactions and data governance of data warehouses
- with the flexibility and cost-efficiency of data lakes to enable business intelligence (BI) and machine learning (ML) on all data.
-	Architecture of Lakehouse:
-		It is divided into 3 parts:
-			Cloud service
-			Runtime
-			Workspace
+Lakehouse:- One platform that unify all of your data engineering, analytics and AI workloads. 
+* The Databricks Lakehouse combines the ACID(atomicity, consistency, isolation, and durability)
+  transactions and data governance of data warehouses with the flexibility and cost-efficiency
+  of data lakes to enable business intelligence (BI) and machine learning (ML) on all data.
+  Architecture of Lakehouse:  It is divided into 3 parts:
+		1. Cloud service (AWS, AZURE, GCP)
+		2. Run time (SPARK, Deltalake
+		3. Work space (Data Engineering, ML)
+
 * There are two high level components the control plane and the data plane.
 * The control plane resides in Databricks account while the data plane is 
     in your own cloud subscription.
@@ -31,41 +42,45 @@ Lakehouse:- One platform that unify all of your data engineering,
 * The databricks will provide you with the tools you need to use and control 
   your infrastucture.
 
-* Spark on Databricks:- Apache Spark is a lightning-fast unified analytics 
-  engine for big data and machine learning.
 * DBFS(Data bricks file system):- DBFS is Preinstalled in Databricks Cluters.
   DBFS is just an abstraction layer, while it uses the underlying cloud storage 
   to persist.
 
 * Magic commands:- Magic commands are the built in commands that provide the
   same output regardless of the notebook language.
-* %sql - command to change the run language in notebook.
-* %md - markdown magic command that allows us to have a cell with formatted text.
+  * %sql - command to change the run language in notebook.
+  * %md - markdown magic command that allows us to have a cell with formatted text.
   It helps you to add comments to our notebook.
-* %run - run magic command that allows us to run another notebook from the current 
+  * %run - run magic command that allows us to run another notebook from the current 
   notebook.
   syntax:- ./includes(folder name)/setup(notebook name)
-* %fs - FS magic command to deal with file system operations like ls for listing 
+  * %fs - FS magic command to deal with file system operations like ls for listing 
   files in a given directory.
-* Another way to deal with filesystem operations in to use databricks utilities, also known as dbutils.
+  * Another way to deal with filesystem operations in to use databricks utilities, also known as dbutils.
   syntax:- dbutils.help(), dbutils.fs.help()
-* To create a database:
+  * To create a database:
   SYNTAX:- CREATE DATASASE db_name
   	   CREATE SCHEMA db_name
-* Hive metastore:-It is a repository of metadata such as Databases, Tables, data. 
-* display(files) - We can see the details of the output in a clear way in a tabular format.
-* DESCRIBE HISTORY - History of table in SQL using DESCRIBE HISTORY command.
+  * Hive metastore:-It is a repository of metadata such as Databases, Tables, data. 
+  * display(files) - We can see the details of the output in a clear way in a tabular format.
+  * DESCRIBE HISTORY - History of table in SQL using DESCRIBE HISTORY command.
+  * Transaction log:- Ordered records of every transaction performed on the table.
+  * SHOW TABLES :- This command is used to show the list of tables and views.
+
+
 * TIME TRAVEL:-
   Query older versions of data using a timestamp:-
   syntax:- SELECT * FROM employees TIMESTAMP AS OF"2023-02-01" 
   (or)
   syntax:- SELECT * FROM employees VERSION AS OF 3 
            SELECT * FROM employees@v36
+
 * Rollback Versions:-
   using RESTORE TABLE command
   syntax:- RESTORE TABLE employees TO TIMESTAMP AS OF "2022-12-12"
   (OR)
   syntax:- RESTORE TABLE employees TO VERSION AS OF 3
+
 * Compaction:- 
   The compaction operation is a way to reduce disk space usage by removing unwanted and old 
   data from database or view index files.
@@ -73,20 +88,16 @@ Lakehouse:- One platform that unify all of your data engineering,
     when we compact it will change into one or more larger files.
   syntax:- OPTIMIZE employees
 	   ZORDER BY column_name
+
 * Vaccum a DELTA TABLE:-
   * Cleaning up unused data files
     * uncommitted files
     * files that are no longer in latest table state
   syntax:- VACCUM table_name [retension period]
     * Default retension period is 7 days
-  * NOTE:- Vaccum = no time travel
-* DROP TABLE employees- is used to completely delete the table from the database.
+  * NOTE:- Vaccum = no time travel* DROP TABLE employees- is used to completely delete the table from the database.
 
 
-
-* DELTA LAKE:-  Delta lake is an open-source storage framework that brings reliability to data lakes
-* Delta lake is a component which is deployed on the cluster as part of the Datacricks runtime.
-* Transaction log:- Ordered records of every transaction performed on the table.
 * In databricks there are two types of tables:
 	* Managed tables:- Created under the database directory.
 			  * Dropping the table, delete the underlying data files.
@@ -96,12 +107,266 @@ Lakehouse:- One platform that unify all of your data engineering,
 			                                 CREATE TABLE table_name
                                                          LOCATION 'dbfs/some/path_2/x_table3';
 
-* We can also create a table using CTAS (Create table as select statement). It will create and populate data tables using the output of a sselect
-  statement.
+* We can also create a table using CTAS (Create table as select statement). It will create and populate data 
+  tables using the output of a select statement.
+  syntax:- CREATE TABLE table_1 
+	   AS SELECT * FROM table_2
+      eg:- CREATE TABLE new_table 
+ 	   PARTITIONED BY (city, birth_date)
+  	   LOCATION '/some/path/'
+ 	   AS SELECT id, name, email, birth_date, city FROM users
 
 
-* Hive metastore:-
-  A Hive metastore is a database that holds metadata about our data.
+* Table Constaints:- Data bricks supports two types of table constraints
+	* NOT NULL constarints 
+	* CHECK constraints
+* syntax:- 
+* ex:- ALTER TABLE table_name ADD CONSTRAINT constaint_name constraint_details
+* ex:- ALTER TABLE orders ADD CONSTRAINT valid_date CHECK (date>'2020-01-01')
+
+
+* Copying:-
+* Delta lake has two options to efficiently copying Delta lake tables.
+  * Useful to set up tables for testing in development.
+  * In either case, data modifications will not affect the source.
+	* Deep Clone
+	* Shallow Clone
+* Deep cloning:- Fully copies data + metadata from a source table to target
+	* CREATE TABLE table_name
+	  DEEP CLONE source_table
+    * Deep clone can sync changes 
+    * Takes long time to copy.
+* Shallow Cloning:- Quickly create a copy of a table 
+	* CREATE TABLE table_name
+	  SHALLOW CLONE source_name
+ 
+* VIEW:- Logical query against source tables.
+  * Stored Views
+  * Temporary Views
+  * Global Temporary views
+  * Stored Views:- Persisted objects
+		   Dropped only by DROP VIEW
+	syntax:-   CREATE VIEW view_name
+ 		   AS query
+  * Temporary View:- Session-scoped view
+		   Dropped when session ends
+ 	syntax:-   CREATE TEMP VIEW view_name
+		   AS query 
+  * GLOBAL Temporary View:- Cluster-scoped view
+		   Dropped when cluster restarted
+ 	syntax:- CREATE GLOBAL TEMP VIEW view_name
+		 AS QUERY
+ 	EX:-     SELECT * FROM global_temp.view_name
+ 
+
+* The table with external database is not delta table.
+* Querying Files Directly:- 
+  syntax:- SELECT * FROM file_format.`/path/to/file`
+      eg:- SELECT * FROM json.`/path/file_name.json`
+* Raw data:-
+  * Extract text files as raw strings
+  * Text-based files(json, csv, tsv and txt formats)
+  syntax:- SELECT * FROM text.`path/to/file`
+  * Extract files as raw bytes
+  * Images or unstructured data 
+  syntax:- SELECT * FROM binaryFile.`/path/to/file`
+* CTAS: Registering Tables from Files 
+  * CREATE TABLE table_name
+    AS SELECT * FROM file_format.`/path/to/file`
+  * Do Not support file options.
+* Registering Tables on External Data Sources:-
+  *  CREATE TABLE table_name
+     (col_name col_type, .....)
+     USING data_source
+     OPTIONS (KEY1 = VAL1, KEY2 = VAL2, .....)
+     LOCATION = PATH
+  *eg:- CREATE TABLE table_name
+	(col_name col_type ...)
+	USING CSV
+	OPTIONS (header = "true", delimiter = ";")
+	LOCATION = path
+
+* Querying files:-
+* To copy datasets :-
+  syntax:- %run ../Includes/Copy-Datasets
+* To list the customers data which is in json format:-
+  syntax:- files = dbutils.fs.ls(f"{dataset_bookstore}/customers-json")
+           display(files)
+* To query a single json file :-
+  syntax:- SELECT * FROM json.`${dataset.bookstore}/customers-json/expert_001.json`
+
+* To see how many customers we have
+  syntax:- SELECT count(*) FROM json.`${dataset.bookstore}/customers-json` 
+ 
+* input_file_name() source_file which is used to troubleshooting problems in the ssource data become necessary. which adds another column souce of the file.
+  synta:- SELECT *,
+             input_file_name() source_file
+           FROM json.`${dataset.bookstore}/customers-json`;
+
+* To read different books data:-
+* SELECT * FROM binaryFile.`${dataset.bookstore}/customers-json`
+* SELECT * FROM csv.`${dataset.boookstore}/books-csv`
+ 
+* To overwrite tables:- 
+  * Writing to tables:- 
+  syntax:- CREATE OR REPLACE TABLE orders AS
+	   SELECT * FROM parquer.`${dataset.bookstore}/orders`
+  * INSERT METHOD:- * It means data in the target table is replaced by the data from the query.
+	            * It can only overwrite an existing table and not creating a new one like our create or replace statement.
+  syntax:- INSERT OVERWRITE orders
+           SELECT * FROM parquet.`${dataset.boookstore}/orders`
+
+* To append records to table:-
+  *  We use INSERT INTO statement to add new data.But exicuting the query multiples timmmes will add duplicate values to the table.
+  syntax:- INSERT INTO orders
+	   SELECT * FROM parquet.`${dataset.bookstore}/orders-new`
+
+  * We can use MERGE INTO to update+insert(upsert) data from a source table, view, or dataframe into the target data table.
+  * We can update, insert, delete using merge into statement.
+  * Merge operation is a great solution for avoiding dupliates when insertiong records.
+  syntax:- 
+	CREATE OR REPLACE TEMP VIEW customers_updates AS 
+	SELECT * FROM json.`${dataset.bookstore}/customers-json-new`
+	
+	MERGE INTO customers c
+	USING customers_updates u
+	ON c.customer_id = u.customer_id 
+	WHEN MATCHED AND c.email IS NULL AND u.email IS NOT NULL THEN 
+	UPDATE SET email = u.email, updated = u.updated 
+	WHEN NOT MATCHED THEN INSERT *
+  syntax:-
+	CREATE OR REPLACE TEMP VIEW books_updates
+	     (book_id STRING, title STRING, author STRING, category STRNG, price DOUBLE)
+	USING CSV
+	OPTIONS (
+	   path = "${dataset.bookstore}/books-csv-new",
+	   header = "true",
+	   delimiter = ";"
+	);
+	SELECT * FROM books_updates
+
+	MERGE INTO boobks b
+	USING books_updates u
+	ON b.book_id = u.book_id AND b.title = u.title 
+	WHEN NOT MATCHED AND u.category = 'computer science' THEN
+	   INSERT *
+
+
+* Spark SQL has built-in functionality to directly interact with JSON data stored as strings.
+* We can simply use the colon syntax to transverse nested data structures.
+  syntax:- 
+	SELECT customer_id, profile:first_name, profile:address:country
+	FROM customers 
+* struct:-Structures (also called structs) are a way to group several related variables into
+  one place. Each variable in the structure is known as a member of the structure. Unlike an array,
+  a structure can contain many different data types (int, float, char, etc.).
+* Spark has the ability to parse JSON object into struct type. sturct has a native spark type with nested attributes.
+  syntax:
+	SELECT from_json(profile) AS profile_struct 
+	     FROM customers;
+* We have to copy the schema of one id with limit clause
+  syntax:-
+	SELECT profile
+	FROM customers
+	LIMIT 1
+* Now we can query using the above query
+  syntax:-
+	CREATE OR REPLACE TEMP VIEW parsed_customers AS 
+	    SELECT customer_id, from_json(profile, schema_of_json('{"first_name":"Thomas", "lasr_name":"Vani"..........')) AS profile_struct 
+	FROM customers;
+	SELECT * FROM parsed_customers
+  * Using struct type we can interact with the nested objects.
+
+* Explode:- The most important one is the explode function that allows us to put each element of an array on its own row.
+  syntax:- SELECT order_id, customer_id, explode(books) AS book 
+	   FROM orders
+* Collect_set aggregation function:- It allow us to colect unique values for a field, including fields within arrays.
+  syntax:-
+	SELECT customer_id, 
+	    collect_set(order_id) AS orders_set, 
+	    collect_set(books.book_id) AS books_set
+	FROm orders
+	GROUP BY customer_id
+
+* We are applying flatten function and then we apply the array_distinct function to keep only the distinct values.
+  syntax:-
+	SELECT customer_id, 
+	    collect_set(books.book_id) AS before_flatten, 
+	    array_distinct(flatten(collect_set(books.books_id)) AS after_flatten
+	FROm orders
+	GROUP BY customer_id
+* JOINS:- inner, outer, left, right anti, cross and semi joins.
+* Inner joins:-
+  syntax:-
+	CREATE OR REPLACE VIEW orders_enriched AS 
+	SELECT *
+	FROM (
+	   SELECT *, explode(books) AS book
+	   FROM orders) o
+	INNER JOIN books b
+	ON o.book.book_id = b.book_id;
+
+	SELECT * FROM orders_enriched
+
+* UNION:-
+  syntax:-
+	CREATE OR REPLACE TEMP VIEW orders_update
+	AS SELECT * FROM parquet.`${dataset.bookstore}/orders-new`;
+	SELECT * FROM orders
+	UNION
+	SELECT * FROM orders_updates
+
+* Intersection:-
+  syntax:-
+	SELECT * FROM orders
+	INTERSECT
+	SELECT * FROM orders_updates
+
+* MINUS:- If you are doing orders minus orders_updates, you will get only the orders data without the new records.
+  syntax:-
+	SELECT * FROM orders
+	MINNUS
+	SELECT * FROM orders_updates
+
+* PIVOT clause:-The pivot table visualization aggregates records from a query result into a new tabular display.
+  syntax:-
+	CREATE OR REPLACE TABLE transactions AS
+	SELECT * FROM (
+	   customers_id, 
+	   book.book_id AS book_id,
+	   book.quantity AS quantity,
+	  FROM orders_enriched
+	) PIVOT (
+	  sum(quantity) FOR book_id in (
+		'B01', 'B02' , 'B03', 'B04'...,
+	  )
+ 	);
+	SELECT * FROM transactions
+
+* HOF:-(Higher order functions)
+* FILTER:-
+  * hof allow you to work directly with hierarchial data like arrays and map type objects.
+  * One of the important function is filter
+  syntax:-
+	SELECT 
+	   order_id, 
+	   books, 
+	   FILTER (books, i -> i.quantity >= 2) AS multiple_copies
+	FROM orders
+  * We can avoid empty arrays from multiple_copies using WHERE clause.
+
+* TRANSFORM:-
+  * Which is used to apply a transfromation on all the items in an array and extract the transformed value.
+
+
+
+
+
+
+
+
+
+
 
 
 
