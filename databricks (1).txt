@@ -1,10 +1,9 @@
-
 Data Bricks:- Databricks is a multi-cloud lakehouse platform based on Apache Spark.
 * Databricks is an organisation and big data processing platform founded by the creators of apache.
 * Databricks is an industry-leading, cloud-based data engineering tool used for processing and
   transforming massive quantities of data and exploring the data through machine learning models.
 
-Databricks:- Uses
+Databricks:-
 * Databricks Lakehouse Platfrom 
 * ELT(Etract, load, transform) with spark SQL and Python 
 * Incremental Data Processing 
@@ -21,7 +20,7 @@ Databricks:- Uses
   engine for big data and machine learning.
 
 * DELTA LAKE:-  Delta lake is an open-source storage framework that brings reliability to data lakes
-* Delta lake is a component which is deployed on the cluster as part of the Databricks runtime.
+* Delta lake is a component which is deployed on the cluster as part of the Datacricks runtime.
 
 * Hive metastore:-
   A Hive metastore is a database that holds metadata about our data.
@@ -117,11 +116,11 @@ Lakehouse:- One platform that unify all of your data engineering, analytics and 
  	   AS SELECT id, name, email, birth_date, city FROM users
 
 
-* Table Constaints:- Data bricks supports two types of table constraints
+* Table Constraints:- Data bricks supports two types of table constraints
 	* NOT NULL constarints 
 	* CHECK constraints
 * syntax:- 
-* ex:- ALTER TABLE table_name ADD CONSTRAINT constaint_name constraint_details
+* ex:- ALTER TABLE table_name ADD CONSTRAINT constraint_name constraint_details
 * ex:- ALTER TABLE orders ADD CONSTRAINT valid_date CHECK (date>'2020-01-01')
 
 
@@ -170,6 +169,8 @@ Lakehouse:- One platform that unify all of your data engineering, analytics and 
   * Extract files as raw bytes
   * Images or unstructured data 
   syntax:- SELECT * FROM binaryFile.`/path/to/file`
+
+
 * CTAS: Registering Tables from Files 
   * CREATE TABLE table_name
     AS SELECT * FROM file_format.`/path/to/file`
@@ -198,8 +199,9 @@ Lakehouse:- One platform that unify all of your data engineering, analytics and 
 * To see how many customers we have
   syntax:- SELECT count(*) FROM json.`${dataset.bookstore}/customers-json` 
  
-* input_file_name() source_file which is used to troubleshooting problems in the ssource data become necessary. which adds another column souce of the file.
-  synta:- SELECT *,
+* input_file_name() source_file which is used to troubleshooting problems in the source data become necessary.
+  which adds another column source of the file.
+  syntax:- SELECT *,
              input_file_name() source_file
            FROM json.`${dataset.bookstore}/customers-json`;
 
@@ -209,25 +211,26 @@ Lakehouse:- One platform that unify all of your data engineering, analytics and 
  
 * To overwrite tables:- 
   * Writing to tables:- 
-  syntax:- CREATE OR REPLACE TABLE orders AS
-	   SELECT * FROM parquer.`${dataset.bookstore}/orders`
+  syntax:- CREATE OR REPLACE TABLE orders 
+           AS SELECT * FROM parquet.`${dataset.bookstore}/orders`
   * INSERT METHOD:- * It means data in the target table is replaced by the data from the query.
 	            * It can only overwrite an existing table and not creating a new one like our create or replace statement.
   syntax:- INSERT OVERWRITE orders
            SELECT * FROM parquet.`${dataset.boookstore}/orders`
 
 * To append records to table:-
-  *  We use INSERT INTO statement to add new data.But exicuting the query multiples timmmes will add duplicate values to the table.
+  *  We use INSERT INTO statement to add new data.
+  *  But exicuting the query multiples times will add duplicate values to the table.
   syntax:- INSERT INTO orders
 	   SELECT * FROM parquet.`${dataset.bookstore}/orders-new`
 
   * We can use MERGE INTO to update+insert(upsert) data from a source table, view, or dataframe into the target data table.
   * We can update, insert, delete using merge into statement.
-  * Merge operation is a great solution for avoiding dupliates when insertiong records.
+  * Merge operation is a great solution for avoiding duplicates when inserting records.
   syntax:- 
 	CREATE OR REPLACE TEMP VIEW customers_updates AS 
 	SELECT * FROM json.`${dataset.bookstore}/customers-json-new`
-	
+	 kno
 	MERGE INTO customers c
 	USING customers_updates u
 	ON c.customer_id = u.customer_id 
@@ -235,8 +238,9 @@ Lakehouse:- One platform that unify all of your data engineering, analytics and 
 	UPDATE SET email = u.email, updated = u.updated 
 	WHEN NOT MATCHED THEN INSERT *
   syntax:-
+
 	CREATE OR REPLACE TEMP VIEW books_updates
-	     (book_id STRING, title STRING, author STRING, category STRNG, price DOUBLE)
+	     (book_id STRING, title STRING, author STRING, category STRING, price DOUBLE)
 	USING CSV
 	OPTIONS (
 	   path = "${dataset.bookstore}/books-csv-new",
@@ -245,7 +249,7 @@ Lakehouse:- One platform that unify all of your data engineering, analytics and 
 	);
 	SELECT * FROM books_updates
 
-	MERGE INTO boobks b
+	MERGE INTO books b
 	USING books_updates u
 	ON b.book_id = u.book_id AND b.title = u.title 
 	WHEN NOT MATCHED AND u.category = 'computer science' THEN
@@ -269,10 +273,11 @@ Lakehouse:- One platform that unify all of your data engineering, analytics and 
 	SELECT profile
 	FROM customers
 	LIMIT 1
+
 * Now we can query using the above query
   syntax:-
 	CREATE OR REPLACE TEMP VIEW parsed_customers AS 
-	    SELECT customer_id, from_json(profile, schema_of_json('{"first_name":"Thomas", "lasr_name":"Vani"..........')) AS profile_struct 
+	    SELECT customer_id, from_json(profile, schema_of_json('{"first_name":"Thomas", "last_name":"Vani"..........')) AS profile_struct 
 	FROM customers;
 	SELECT * FROM parsed_customers
   * Using struct type we can interact with the nested objects.
@@ -280,7 +285,7 @@ Lakehouse:- One platform that unify all of your data engineering, analytics and 
 * Explode:- The most important one is the explode function that allows us to put each element of an array on its own row.
   syntax:- SELECT order_id, customer_id, explode(books) AS book 
 	   FROM orders
-* Collect_set aggregation function:- It allow us to colect unique values for a field, including fields within arrays.
+* Collect_set aggregation function:- It allow us to collect unique values for a field, including fields within arrays.
   syntax:-
 	SELECT customer_id, 
 	    collect_set(order_id) AS orders_set, 
@@ -313,6 +318,7 @@ Lakehouse:- One platform that unify all of your data engineering, analytics and 
 	CREATE OR REPLACE TEMP VIEW orders_update
 	AS SELECT * FROM parquet.`${dataset.bookstore}/orders-new`;
 	SELECT * FROM orders
+
 	UNION
 	SELECT * FROM orders_updates
 
@@ -356,38 +362,135 @@ Lakehouse:- One platform that unify all of your data engineering, analytics and 
   * We can avoid empty arrays from multiple_copies using WHERE clause.
 
 * TRANSFORM:-
-  * Which is used to apply a transfromation on all the items in an array and extract the transformed value.
+  * Which is used to apply a transformation on all the items in an array and extract the transformed value.
+  syntax:-
+	SELECT 
+	   order_id,
+	   books,
+	   TRANSFORM (
+	      books,
+	      b -> CAST(b.subtotal * 0.8 AS INT)
+	   ) AS subtatoal_after_discount
+	FROM orders;
+
+* USER DEFINED FUNCTION(UDF):- Which allow you to register a custom combination of SQL logic as function 
+  in a database, making these methods reusable in any SQL query.
+  syntax:- 
+	CREATE OR REPLACE FUNCTION get_url(email STRING)
+	RETURNS STRING 
+	RETURN concat("https://www.split(emial,"@")[1])
+ * To DROP a user-defined function 
+  syntax:- DROP FUNCTION get_url;
 
 
+* Data Stream:- 
+  * A data stream is an unbounded sequence of data arriving continuously. Streaming divides 
+    continuously flowing input data into discrete units for further processing. Stream processing
+    is low latency processing and analyzing of streaming data.
+  * Any data source that grows over time.
+  * Processing data can be done in two approaches:-
+    1. Reprocess the entire source dataset each time
+    2. Only process those new data added since last update
+  * Spark Structured Streaming:- Spark structured streaming is a scalable streaming processing engine.
+
+* SINK:- A sink is just a durable file system, such as files or tables.
+* A table representing an infinite data source is seen as "unbounded" table.
+* We can simply use spark.readStream() to query the delta table as a stream source, which allows to process
+   all of the data present in the table as well as any new data that arrive later.
+
+* streamDF.writeStream
+	  .trigger(processingTime="2 minutes")
+	  .outputMode("append")
+	  .option("checkpointLocation", "/path")
+	  .table("Output_table")
+* Trigger Intervals:-
+  * Trigger		Methos					Behaviour 
+  * Unspecified							Default:processingTime="500ms"
+  * Fixed interval	.trigger(processingTime="5 minutes")	Prosecc data in micro-batches at the user-specified intervals
+  * Triggered batch 	.trigger(once=True)			Process all available data in a single batch, then stop
+  * Triggered micro 	.trigger(availableNow=True)		Process all available data in multiple micro batches, then stop
+	batches
+* Output Mode:-
+  * Mode		Method call		 Behavior
+  * Append(default)	.outputMode("append")	 only newly appended rows are incrementally appended to the target table with each batch
+  * complete		.outputMode("complete")	 the target table is overwritten with each batch
+* Checkpointing:-
+  * Store stream state
+  * Track the progress of your stream processing
+  * Can not be shared between separate streams
+
+* Structured streaming provides two guarantees:-
+  1.Fault Tolerance
+    * Checkpointing + write-ahead logs
+    * record the offset range of data being processed during each trigger interval.
+  2. Exactly-once guarantee
+
+* Structured streaming do not support 
+  1.Sorting
+  2.Deduplication(the elimination of duplicate or redundant information, especially in computer data.)
+
+* eg:-
+  (spark.table("author_counts_tmp_vw")
+	.writeStream
+	.trigger(processingTime='4 seconds')
+	.outoutMode("complete")
+	.option("checkpointLocation", "dbfs:/mnt/demo/author_counts_checkpoint")
+	.table("author_counts")
+	.awaitTermination
+  )
 
 
+* INCREMENTAL DATA INGESTION:- 
+  * Data Ingestion(Data ingestion is the process of importing large, assorted data files from multiple sources
+    into a single, cloud-based storage medium—a data warehouse, data mart or database—where it can be accessed and analyzed.)
+  * Loading new data files encountered since the last ingestion.
+  * Reduces redundant processing. 
+  * It has two methods
+  * COPY INTO
+  * AUTO LOADER
 
+  * Copy into:- Copy into sql command that allows user to load data from a file location into a delta table.
+     * Files that have already been loaded are skipped.
+     * Thousands of files
+     * Less efficient at scale
+  syntax:- 
+	COPY INTO my_table
+	FROM '/path/to/files'
+	FILEFORMAT = CSV
+	FILE_OPTIONS('delimiter'='|', 'header'='true')
+	COPY_OPTIONS('mergeSchema'='true')
 
+  * Auto loader:- 
+    * Structured streaming
+    * Can process billions of files
+    * Support near real-time ingestion of millions of files per hour.
+    * It follows all the properties of structured streaming.
+    * Auto loader has a specific format of streamreader called cloudFiles.
+    * Millions of files
+    * Efficient at scale.
+  syntax:-
+  spark.readStream
+	.format("cloudFiles")
+	.option("cloudFiles.format",<schema_format>)
+	.option("cloudFiles.schemaLocation",<schema_directory>)
+        .load('/path/to/files')
+       .writeStream
+	.option("checkpointLocation",<checkpoint_directory>)
+	.option("mergeSchema","true")
+	.table(<table_name>)
+	
+* MULTI-HOP ARCHITECTURE:-
+  * Medallion Architecture
+  * Organize data in multi-layared approach.
+  * Incrementally proving the structure and quality of data as it flows through each layer.
+  * Consists of 3 layes:- Bronze, Silver, Gold.
+    * Bronze:- It contains ingested raw data like json files, operational dbs, kafka stream etc....
+    * Silver:- Provides more refined view of our data, which is filtered, cleaned, augmented data.
+       * We can join fields from various brache table to enrich our silver records.
+   * Gold:- The gold table provides business-level aggregations, often used for reporting and dashboarding.
+      
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
+* DLT tables:-Delta live tables makes it easy to build and mange reliable batch and streaming data pipelines that deliver high-quality data
+  on the Databricks Lakehouse platform.
+  * Delta Live Tables is a framework for building reliable, maintainable, and testable data processing pipelines. 
+  * DLT tables will always be preceeded by the LIVE keyword.
